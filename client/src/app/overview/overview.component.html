@@ -1,0 +1,3 @@
+<li *ngFor="let teacher of teachers$ | async">
+  {{teacher.name}}{{teacher.subject | json}}
+</li>
