@@ -1,15 +1,19 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { MockTeachers } from 'src/app/mocks/mock-teachers';
+import { Observable } from 'rxjs';
 
 import { TeacherOverview } from '../models/teacher-overview';
 
 @Injectable()
 export class OverviewService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getTeacherOverview(): Observable<TeacherOverview[]> {
-    return of(MockTeachers);
+    return this.http.get<TeacherOverview[]>('http://localhost:3000/test');
+  }
+
+  getTest(): Observable<any> {
+    return this.http.get('http://localhost:3000/test');
   }
 }

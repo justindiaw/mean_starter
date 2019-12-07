@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { MatButtonModule, MatIconModule } from '@angular/material';
 import { NgxsModule } from '@ngxs/store';
 
 import { OverviewRoutingModule } from './overview-routing.module';
@@ -12,6 +14,9 @@ import { OverviewState } from './store/overview-state.state';
   imports: [
     CommonModule,
     OverviewRoutingModule,
+    MatButtonModule,
+    MatIconModule,
+    HttpClientModule,
     NgxsModule.forFeature([OverviewState])
   ],
   providers: [

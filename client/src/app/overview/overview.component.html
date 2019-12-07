@@ -1,3 +1,8 @@
+<button mat-raised-button>
+  <mat-icon>add</mat-icon>Add
+</button>
+
 <li *ngFor="let teacher of teachers$ | async">
-  {{teacher.name}}{{teacher.subject | json}}
+  {{teacher.firstName}} {{teacher.lastName}}
+  <button mat-button>View/Edit</button>
 </li>

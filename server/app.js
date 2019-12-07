@@ -42,11 +42,21 @@
 
 const express = require('express'),
     mongoose = require('mongoose'),
+    cors = require('cors'),
     bodyParser = require('body-parser');
+
+const MongoClient = require("mongodb").MongoClient;
+const ObjectId = require("mongodb").ObjectID;
+const CONNECTION_URL = "mongodb+srv://developer:Ss110110@cluster0-yugia.mongodb.net/test?retryWrites=true&w=majority";
+const DATABASE_NAME = "example";
 
 const app = express();
 const port = 3000;
-
+// app.all('*', function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//     next();
+//   });
 // mongoose.Promise = global.Promise;
 // mongoose.connect(config.DB, { useNewUrlParser: true }).then(
 //   () => {console.log('Database is connected') },
@@ -54,9 +64,29 @@ const port = 3000;
 // );
 
 app.use(bodyParser.json());
-app.get('/', (req, res) => res.send('Hello World!'));
+app.use(cors());
+app.listen(port, () => {
+    MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
+        if(error) {
+            throw error;
+        }
+        database = client.db(DATABASE_NAME);
+        collection = database.collection("people");
+        console.log("Connected to `" + DATABASE_NAME + "`!");
+    });
+    console.log(`Example app listening on port ${port}!`)
+});
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.get('/test', (req, res) => res.send({content: 'hellow world'}));
+
+app.post("/person", (request, response) => {
+    collection.insert(request.body, (error, result) => {
+        if(error) {
+            return response.status(500).send(error);
+        }
+        response.send(result.result);
+    });
+});
 
 // const express = require('express'),
 //     path = require('path'),

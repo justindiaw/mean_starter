@@ -19,6 +19,7 @@ export class OverviewComponent implements OnInit {
 
   ngOnInit() {
     this.load();
+    // this.store.dispatch(new GetTest());
   }
 
   load(): void {
