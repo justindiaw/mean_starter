@@ -1,3 +1,4 @@
+import { Server } from '@overnightjs/core';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as express from 'express';
@@ -5,12 +6,13 @@ import { MongoClient } from 'mongodb';
 
 import { CONNECTION_URL, DATABASE_NAME } from '../dbconfig';
 
-export default class App {
+export default class App extends Server {
 
     public app: express.Application;
 
     constructor() {
-        this.app = express();
+        super(true);
+        // this.app = express();
         this.initDatabase(this.config.bind(this));
     }
 
@@ -43,5 +45,16 @@ export default class App {
             console.log(`Connected to database: ${DATABASE_NAME}!`);
             config(db);
         });
+    }
+
+    private setupControllers(): void {
+        const ctlrInstances = [];
+        // for (const name in controllers) {
+        //     if (controllers.hasOwnProperty(name)) {
+        //         const controller = (controllers as any)[name];
+        //         ctlrInstances.push(new controller());
+        //     }
+        // }
+        super.addControllers(ctlrInstances);
     }
 }
