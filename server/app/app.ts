@@ -2,10 +2,10 @@ import { Server } from '@overnightjs/core';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as express from 'express';
-import { MongoClient } from 'mongodb';
+import * as mongoose from 'mongoose';
 
-import { CONNECTION_URL, DATABASE_NAME } from '../dbconfig';
-import * as controllers from './controllers';
+import * as controllers from '../controllers';
+import { CONNECTION_URL } from '../dbconfig';
 
 export default class App extends Server {
 
@@ -14,7 +14,8 @@ export default class App extends Server {
     constructor() {
         super(true);
         // this.app = express();
-        this.initDatabase(this.config.bind(this));
+        this.config();
+        this.initDatabase();
     }
 
     start(port: number): void {
@@ -23,29 +24,32 @@ export default class App extends Server {
         });
     }
 
-    private config(db: any): void {
+    private config(): void {
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(cors());
-        this.app.get('/test', (request, response) => {
-            db.collection('teachers')
-                .find({})
-                .toArray((error, result) => {
-                    response.send(result);
-                });
-        });
+        // this.app.get('/test', (request, response) => {
+        //     db.collection('teachers')
+        //         .find({})
+        //         .toArray((error, result) => {
+        //             response.send(result);
+        //         });
+        // });
     }
 
 
-    private initDatabase(config: Function): void {
-        MongoClient.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
-            if (error) {
-                throw error;
-            }
-            const db = client.db(DATABASE_NAME);
-            console.log(`Connected to database: ${DATABASE_NAME}!`);
-            config(db);
-        });
+    private initDatabase(): void {
+        // mongoose.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
+        //     if (error) {
+        //         throw error;
+        //     }
+        //     const db = client.db(DATABASE_NAME);
+        //     console.log(`Connected to database: ${DATABASE_NAME}!`);
+        //     config(db);
+        // });
+        mongoose.connect(CONNECTION_URL);
+        const db = mongoose.connection;
+        db.on('error', console.error.bind(console, 'connection error:'));
     }
 
     private setupControllers(): void {
