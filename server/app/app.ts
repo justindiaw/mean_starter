@@ -5,6 +5,7 @@ import * as express from 'express';
 import { MongoClient } from 'mongodb';
 
 import { CONNECTION_URL, DATABASE_NAME } from '../dbconfig';
+import * as controllers from './controllers';
 
 export default class App extends Server {
 
@@ -49,12 +50,12 @@ export default class App extends Server {
 
     private setupControllers(): void {
         const ctlrInstances = [];
-        // for (const name in controllers) {
-        //     if (controllers.hasOwnProperty(name)) {
-        //         const controller = (controllers as any)[name];
-        //         ctlrInstances.push(new controller());
-        //     }
-        // }
+        for (const name in controllers) {
+            if (controllers.hasOwnProperty(name)) {
+                const controller = (controllers as any)[name];
+                ctlrInstances.push(new controller());
+            }
+        }
         super.addControllers(ctlrInstances);
     }
 }
