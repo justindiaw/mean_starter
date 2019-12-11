@@ -4,11 +4,11 @@ import { Request, Response } from 'express';
 
 import Teacher from '../schemas/teacher.model';
 
-@Controller('api/test')
+@Controller('api/teachers')
 export class TeacherController {
 
     @Get('')
-    private getMessage(req: Request, res: Response) {
+    private getTeachers(req: Request, res: Response): void {
         Teacher.find({}).then(
             result => {
                 res.status(200).json(result);
@@ -16,23 +16,27 @@ export class TeacherController {
         );
     }
 
-    @Put(':msg')
-    private putMessage(req: Request, res: Response) {
+    @Put('')
+    private putTeachers(req: Request, res: Response) {
         Logger.Info(req.params.msg);
         return res.status(400).json({
             error: req.params.msg,
         });
     }
 
-    @Post(':msg')
-    private postMessage(req: Request, res: Response) {
-        Logger.Info(req.params.msg);
-        return res.status(400).json({
-            error: req.params.msg,
+    @Post('')
+    private addTeacher(req: Request, res: Response): void {
+        const newTeacher = new Teacher({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName
+        });
+        newTeacher.save().then(result => {
+            console.log(result);
+            res.send(200).json(result);
         });
     }
 
-    @Delete(':msg')
+    @Delete('')
     private delMessage(req: Request, res: Response) {
         try {
             throw new Error(req.params.msg);
