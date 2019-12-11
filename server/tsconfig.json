@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "baseUrl": "server",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -10,8 +10,6 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es5",
-    "allowJs": true,
-    "noEmit": true,
     "typeRoots": [
       "node_modules/@types"
     ],
