@@ -20,6 +20,12 @@ export class ViewEditTeacherDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.teacher = this.data ? this.data :
+      {
+        _id: '',
+        firstName: '',
+        lastName: ''
+      };
   }
 
   onSave(): void {

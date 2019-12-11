@@ -14,6 +14,7 @@ export class OverviewService {
   }
 
   addTeacher(teacher: TeacherOverview): Observable<any> {
+    console.log(teacher);
     return this.http.post<any>('http://localhost:3000/api/teachers', teacher);
   }
 }

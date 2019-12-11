@@ -8,12 +8,14 @@
   <div class="form-container">
     <mat-form-field>
       <input matInput
-        placeholder="Last Name">
+        placeholder="Last Name"
+        [(ngModel)]="teacher.firstName">
     </mat-form-field>
 
     <mat-form-field>
       <input matInput
-        placeholder="First Name">
+        placeholder="First Name"
+        [(ngModel)]="teacher.lastName">
     </mat-form-field>
   </div>
 </mat-card-content>

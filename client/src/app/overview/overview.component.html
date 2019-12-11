@@ -4,7 +4,7 @@
 </button>
 
 <li *ngFor="let teacher of teachers$ | async">
-  {{teacher.firstName}} {{teacher.lastName}}
+  {{teacher._id}}{{teacher.firstName}} {{teacher.lastName}}
   <button mat-button
     (click)="onClickViewEdit(teacher)">View/Edit</button>
 </li>

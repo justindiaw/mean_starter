@@ -1,6 +1,5 @@
 export interface TeacherOverview {
-    id: string;
+    _id: string;
     firstName: string;
     lastName: string;
-    subject?: string[];
 }

@@ -42,7 +42,7 @@ export class OverviewState {
     const state = ctx.getState();
     this.overviewService.addTeacher(teacher)
       .subscribe(data => {
-        // ctx.patchState({ teachers: data });
+        ctx.dispatch(new LoadTeacherOverview());
       });
   }
 }

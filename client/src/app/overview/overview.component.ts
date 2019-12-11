@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { Select, Store } from '@ngxs/store';
 
 import { TeacherOverview } from './models/teacher-overview';
-import { LoadTeacherOverview } from './store/overview-state.actions';
+import { AddTeacher, LoadTeacherOverview } from './store/overview-state.actions';
 import { OverviewState } from './store/overview-state.state';
 import { ViewEditTeacherDialogComponent } from './view-edit-teacher-dialog/view-edit-teacher-dialog.component';
 
@@ -35,8 +35,9 @@ export class OverviewComponent implements OnInit {
     });
 
     dialog.componentInstance.cancel.subscribe(() => dialog.close());
-    dialog.componentInstance.save.subscribe(() => {
-
+    dialog.componentInstance.save.subscribe(teacherData => {
+      this.store.dispatch(new AddTeacher(teacherData));
+      dialog.close();
     });
   }
 }
