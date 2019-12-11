@@ -2,15 +2,18 @@ import { Controller, Delete, Get, Post, Put } from '@overnightjs/core';
 import { Logger } from '@overnightjs/logger';
 import { Request, Response } from 'express';
 
+import Teacher from '../schemas/teacher.model';
+
 @Controller('api/test')
 export class TeacherController {
 
     @Get('')
     private getMessage(req: Request, res: Response) {
-        Logger.Info(req.params.msg);
-        res.status(200).json({
-            message: req.params.msg,
-        });
+        Teacher.find({}).then(
+            result => {
+                res.status(200).json(result);
+            }
+        );
     }
 
     @Put(':msg')

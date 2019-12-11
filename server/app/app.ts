@@ -5,7 +5,7 @@ import * as express from 'express';
 import * as mongoose from 'mongoose';
 
 import * as controllers from '../controllers';
-import { CONNECTION_URL } from '../dbconfig';
+import { CONNECTION_URL, DATABASE_NAME } from '../dbconfig';
 
 export default class App extends Server {
 
@@ -13,9 +13,9 @@ export default class App extends Server {
 
     constructor() {
         super(true);
-        // this.app = express();
         this.config();
         this.initDatabase();
+        this.setupControllers();
     }
 
     start(port: number): void {
@@ -39,17 +39,12 @@ export default class App extends Server {
 
 
     private initDatabase(): void {
-        // mongoose.connect(CONNECTION_URL, { useNewUrlParser: true }, (error, client) => {
-        //     if (error) {
-        //         throw error;
-        //     }
-        //     const db = client.db(DATABASE_NAME);
-        //     console.log(`Connected to database: ${DATABASE_NAME}!`);
-        //     config(db);
-        // });
-        mongoose.connect(CONNECTION_URL);
-        const db = mongoose.connection;
-        db.on('error', console.error.bind(console, 'connection error:'));
+        mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, dbName: DATABASE_NAME }, error => {
+            if (error) {
+                console.log(error);
+            }
+            console.log(`Connected to DB "${DATABASE_NAME}"...`);
+        });
     }
 
     private setupControllers(): void {
