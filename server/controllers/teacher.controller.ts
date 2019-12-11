@@ -26,13 +26,15 @@ export class TeacherController {
 
     @Post('')
     private addTeacher(req: Request, res: Response): void {
+        console.log(req.body);
         const newTeacher = new Teacher({
             firstName: req.body.firstName,
             lastName: req.body.lastName
         });
+        // res.sendStatus(200).json({});
         newTeacher.save().then(result => {
             console.log(result);
-            res.send(200).json(result);
+            res.status(200).json(result);
         });
     }
 
