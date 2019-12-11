@@ -2,14 +2,14 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 
 import { TeacherOverview } from '../models/teacher-overview';
 import { OverviewService } from '../services/overview.service';
-import { GetTest, LoadTeacherOverview } from './overview-state.actions';
+import { AddTeacher, LoadTeacherOverview } from './overview-state.actions';
 
 export interface OverviewStateModel {
   teachers: TeacherOverview[];
 }
 
 export const defaultOverviewState = {
-    teachers: []
+  teachers: []
 };
 
 @State<OverviewStateModel>({
@@ -33,16 +33,16 @@ export class OverviewState {
     const state = ctx.getState();
     this.overviewService.getTeacherOverview()
       .subscribe(data => {
-        ctx.patchState({teachers: data});
+        ctx.patchState({ teachers: data });
       });
   }
 
-  @Action(GetTest)
-  getTest(ctx: StateContext<OverviewStateModel>, { }: GetTest) {
+  @Action(AddTeacher)
+  addTeacher(ctx: StateContext<OverviewStateModel>, { teacher }: AddTeacher) {
     const state = ctx.getState();
-    this.overviewService.getTest()
+    this.overviewService.addTeacher(teacher)
       .subscribe(data => {
-        console.log(data);
+        // ctx.patchState({ teachers: data });
       });
   }
 }

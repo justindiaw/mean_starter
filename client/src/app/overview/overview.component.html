@@ -1,8 +1,10 @@
-<button mat-raised-button>
+<button mat-raised-button
+  (click)="onClickViewEdit()">
   <mat-icon>add</mat-icon>Add
 </button>
 
 <li *ngFor="let teacher of teachers$ | async">
   {{teacher.firstName}} {{teacher.lastName}}
-  <button mat-button>View/Edit</button>
+  <button mat-button
+    (click)="onClickViewEdit(teacher)">View/Edit</button>
 </li>

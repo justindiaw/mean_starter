@@ -10,10 +10,10 @@ export class OverviewService {
   constructor(private http: HttpClient) { }
 
   getTeacherOverview(): Observable<TeacherOverview[]> {
-    return this.http.get<TeacherOverview[]>('http://localhost:3000/api/test');
+    return this.http.get<TeacherOverview[]>('http://localhost:3000/api/teachers');
   }
 
-  getTest(): Observable<any> {
-    return this.http.get('http://localhost:3000/test');
+  addTeacher(teacher: TeacherOverview): Observable<any> {
+    return this.http.post<any>('http://localhost:3000/api/teachers', teacher);
   }
 }

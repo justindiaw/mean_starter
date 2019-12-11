@@ -1,0 +1,25 @@
+<mat-card-header>
+  View/Edit
+</mat-card-header>
+<mat-card-content>
+  <pre>
+    {{data | json}}
+  </pre>
+  <div class="form-container">
+    <mat-form-field>
+      <input matInput
+        placeholder="Last Name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput
+        placeholder="First Name">
+    </mat-form-field>
+  </div>
+</mat-card-content>
+<mat-card-footer>
+  <button mat-flat-button
+    (click)="onCancel()">Cancel</button>
+  <button mat-flat-button
+    (click)="onSave()">Save</button>
+</mat-card-footer>
