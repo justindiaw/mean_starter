@@ -2,7 +2,7 @@ import { Action, Selector, State, StateContext } from '@ngxs/store';
 
 import { TeacherOverview } from '../models/teacher-overview';
 import { OverviewService } from '../services/overview.service';
-import { AddTeacher, LoadTeacherOverview } from './overview-state.actions';
+import { AddTeacher, DeleteTeacher, LoadTeacherOverview, UpdateTeacher } from './overview-state.actions';
 
 export interface OverviewStateModel {
   teachers: TeacherOverview[];
@@ -30,7 +30,6 @@ export class OverviewState {
 
   @Action(LoadTeacherOverview)
   loadOverview(ctx: StateContext<OverviewStateModel>, { }: LoadTeacherOverview) {
-    const state = ctx.getState();
     this.overviewService.getTeacherOverview()
       .subscribe(data => {
         ctx.patchState({ teachers: data });
@@ -39,9 +38,24 @@ export class OverviewState {
 
   @Action(AddTeacher)
   addTeacher(ctx: StateContext<OverviewStateModel>, { teacher }: AddTeacher) {
-    const state = ctx.getState();
     this.overviewService.addTeacher(teacher)
-      .subscribe(data => {
+      .subscribe(() => {
+        ctx.dispatch(new LoadTeacherOverview());
+      });
+  }
+
+  @Action(DeleteTeacher)
+  deleteTeacher(ctx: StateContext<OverviewStateModel>, { teacher }: DeleteTeacher) {
+    this.overviewService.deleteTeacher(teacher)
+      .subscribe(() => {
+        ctx.dispatch(new LoadTeacherOverview());
+      });
+  }
+
+  @Action(UpdateTeacher)
+  updateTeacher(ctx: StateContext<OverviewStateModel>, { teacher }: UpdateTeacher) {
+    this.overviewService.updateTeacher(teacher)
+      .subscribe(teacherResult => {
         ctx.dispatch(new LoadTeacherOverview());
       });
   }

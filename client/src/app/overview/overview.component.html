@@ -5,6 +5,9 @@
 
 <li *ngFor="let teacher of teachers$ | async">
   {{teacher._id}}{{teacher.firstName}} {{teacher.lastName}}
-  <button mat-button
+  <button mat-flat-button
     (click)="onClickViewEdit(teacher)">View/Edit</button>
+  <button mat-flat-button (click)="onClickDelete(teacher)">
+    <mat-icon>delete</mat-icon>
+  </button>
 </li>

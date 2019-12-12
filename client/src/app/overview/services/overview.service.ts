@@ -14,7 +14,14 @@ export class OverviewService {
   }
 
   addTeacher(teacher: TeacherOverview): Observable<any> {
-    console.log(teacher);
     return this.http.post<any>('http://localhost:3000/api/teachers', teacher);
+  }
+
+  deleteTeacher(teacher: TeacherOverview): Observable<any> {
+    return this.http.delete<any>(`http://localhost:3000/api/teachers/${teacher._id}`);
+  }
+
+  updateTeacher(teacher: TeacherOverview): Observable<any> {
+    return this.http.put<any>(`http://localhost:3000/api/teachers/${teacher._id}`, teacher);
   }
 }
