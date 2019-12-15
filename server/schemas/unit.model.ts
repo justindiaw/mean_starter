@@ -1,3 +1,4 @@
+import { ObjectId } from 'bson';
 import * as mongoose from 'mongoose';
 
 const unitSchema = new mongoose.Schema({
@@ -6,6 +7,9 @@ const unitSchema = new mongoose.Schema({
     },
     lastName: {
         type: String
+    },
+    roleId: {
+        type: ObjectId
     }
 });
 const Unit = mongoose.model('Unit', unitSchema);

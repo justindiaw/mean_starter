@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule, MatDialogModule, MatIconModule } from '@angular/material';
 import { NgxsModule } from '@ngxs/store';
 
+import { RoleService } from '../services/role.service';
 import { OverviewRoutingModule } from './overview-routing.module';
 import { OverviewComponent } from './overview.component';
 import { OverviewService } from './services/overview.service';
@@ -26,7 +27,8 @@ const materials = [
     ...materials
   ],
   providers: [
-    OverviewService
+    OverviewService,
+    RoleService
   ],
   entryComponents: [
     ViewEditUnitDialogComponent

@@ -1,26 +1,37 @@
-import { State } from '@ngxs/store';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+import { Role } from '../model/role';
+import { RoleService } from '../services/role.service';
+import { GetRoles } from './app.actions';
 
 export interface AppStateModel {
-  name: string;
+  roles: Role[];
 }
 
 @State<AppStateModel>({
   name: 'app',
   defaults: {
-    name: 'appState'
+    roles: []
   }
 })
 export class AppState {
 
-  // @Selector()
-  // public static getState(state: AppStateModel) {
-  //   return state;
-  // }
+  constructor(private roleService: RoleService) {
 
-  // @Action(AppAction)
-  // public add(ctx: StateContext<AppStateModel>, { payload }: AppAction) {
-  //   const stateModel = ctx.getState();
-  //   stateModel.items = [...stateModel.items, payload];
-  //   ctx.setState(stateModel);
-  // }
+  }
+
+  @Selector()
+  static roles(state: AppStateModel): Role[] {
+    return state.roles;
+  }
+
+  @Action(GetRoles)
+  getRoles(ctx: StateContext<AppStateModel>, { }: GetRoles): Observable<void> {
+    return this.roleService.getRoles()
+      .pipe(map(roles => {
+        ctx.patchState({ roles: roles });
+      }));
+  }
 }

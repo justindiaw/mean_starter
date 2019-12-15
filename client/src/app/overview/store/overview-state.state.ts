@@ -13,7 +13,7 @@ export const defaultOverviewState = {
 };
 
 @State<OverviewStateModel>({
-  name: 'overviewState',
+  name: 'overview',
   defaults: defaultOverviewState
 })
 

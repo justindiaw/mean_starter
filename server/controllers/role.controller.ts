@@ -1,6 +1,7 @@
 import { Controller, Delete, Get, Post, Put } from '@overnightjs/core';
 import { Request, Response } from 'express';
 
+import Role from '../schemas/role.model';
 import Unit from '../schemas/unit.model';
 
 @Controller('api/roles')
@@ -8,7 +9,7 @@ export class RoleController {
 
     @Get('')
     getRoles(req: Request, res: Response): void {
-        Unit.find({}).then(
+        Role.find({}).then(
             result => {
                 res.status(200).json(result);
             }

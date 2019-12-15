@@ -21,7 +21,8 @@ export class UnitController {
             if (req.body._id) {
                 delete req.body._id;
             }
-            for (const property in req.body ) {
+            console.log(req.body);
+            for (const property in req.body) {
                 if (req.body.hasOwnProperty(property)) {
                     unit[property] = req.body[property];
                 }
@@ -35,7 +36,8 @@ export class UnitController {
     private addUnit(req: Request, res: Response): void {
         const newUnit = new Unit({
             firstName: req.body.firstName,
-            lastName: req.body.lastName
+            lastName: req.body.lastName,
+            roleId: req.body.roleId
         });
         newUnit.save().then(result => {
             res.status(200).json(result);

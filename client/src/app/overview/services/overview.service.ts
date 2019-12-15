@@ -13,15 +13,15 @@ export class OverviewService {
     return this.http.get<Unit[]>(this.apiPrefix);
   }
 
-  addTeacher(unit: Unit): Observable<any> {
+  addTeacher(unit: Unit): Observable<void> {
     return this.http.post<any>(this.apiPrefix, unit);
   }
 
-  deleteTeacher(unit: Unit): Observable<any> {
+  deleteTeacher(unit: Unit): Observable<void> {
     return this.http.delete<any>(`${this.apiPrefix}/${unit._id}`);
   }
 
-  updateTeacher(unit: Unit): Observable<any> {
-    return this.http.put<any>(`${this.apiPrefix}/${unit._id}`, JSON.stringify(unit));
+  updateTeacher(unit: Unit): Observable<void> {
+    return this.http.put<any>(`${this.apiPrefix}/${unit._id}`, unit);
   }
 }

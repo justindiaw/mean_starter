@@ -1,5 +1,9 @@
 import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { Role } from 'src/app/model/role';
+import { AppState } from 'src/app/store/app.state';
 
 import { Unit } from '../models/unit';
 
@@ -9,6 +13,8 @@ import { Unit } from '../models/unit';
   styleUrls: ['./view-edit-unit-dialog.component.scss']
 })
 export class ViewEditUnitDialogComponent implements OnInit {
+  @Select(AppState.roles) roles$: Observable<Role[]>;
+
   @Output() save = new EventEmitter<Unit>();
   @Output() cancel = new EventEmitter<void>();
 
@@ -21,10 +27,11 @@ export class ViewEditUnitDialogComponent implements OnInit {
 
   ngOnInit() {
     this.unit = this.data ? { ...this.data } :
-      {
+      <Unit>{
         _id: '',
         firstName: '',
-        lastName: ''
+        lastName: '',
+        roleId: ''
       };
   }
 
