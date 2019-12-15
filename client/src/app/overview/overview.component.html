@@ -4,7 +4,7 @@
 </button>
 
 <li *ngFor="let unit of units$ | async">
-  {{unit._id}}{{unit.firstName}} {{unit.lastName}}
+  {{unit.firstName}} {{unit.lastName}}
   <button mat-flat-button
     (click)="onClickViewEdit(unit)">View/Edit</button>
   <button mat-flat-button (click)="onClickDelete(unit)">

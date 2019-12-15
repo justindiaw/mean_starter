@@ -8,5 +8,5 @@ const unitSchema = new mongoose.Schema({
         type: String
     }
 });
-const Unit = mongoose.model('Unit', unitSchema, 'units');
+const Unit = mongoose.model('Unit', unitSchema);
 export default Unit;
