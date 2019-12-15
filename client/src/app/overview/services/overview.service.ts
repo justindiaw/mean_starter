@@ -10,18 +10,18 @@ export class OverviewService {
   constructor(private http: HttpClient) { }
 
   getTeacherOverview(): Observable<Unit[]> {
-    return this.http.get<Unit[]>(`${this.apiPrefix}`);
+    return this.http.get<Unit[]>(this.apiPrefix);
   }
 
   addTeacher(unit: Unit): Observable<any> {
-    return this.http.post<any>('http://localhost:3000/api/units', unit);
+    return this.http.post<any>(this.apiPrefix, unit);
   }
 
   deleteTeacher(unit: Unit): Observable<any> {
-    return this.http.delete<any>(`http://localhost:3000/api/units/${unit._id}`);
+    return this.http.delete<any>(`${this.apiPrefix}/${unit._id}`);
   }
 
   updateTeacher(unit: Unit): Observable<any> {
-    return this.http.put<any>(`http://localhost:3000/api/units/${unit._id}`, JSON.stringify(unit));
+    return this.http.put<any>(`${this.apiPrefix}/${unit._id}`, JSON.stringify(unit));
   }
 }
