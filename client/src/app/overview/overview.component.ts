@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Select, Store } from '@ngxs/store';
 
+import { AppState } from '../store/app.state';
 import { Unit } from './models/unit';
 import { AddUnit, DeleteUnit, LoadUnits, UpdateUnit } from './store/overview-state.actions';
 import { OverviewState } from './store/overview-state.state';
@@ -14,6 +15,10 @@ import { ViewEditUnitDialogComponent } from './view-edit-unit-dialog/view-edit-u
 })
 export class OverviewComponent implements OnInit {
   @Select(OverviewState.units) units$: Unit[];
+
+  get roleMap(): any {
+    return this.store.selectSnapshot(AppState.roleMap);
+  }
 
   constructor(
     public dialogRef: MatDialog,
@@ -47,5 +52,9 @@ export class OverviewComponent implements OnInit {
 
   onClickDelete(teacher: Unit): void {
     this.store.dispatch(new DeleteUnit(teacher));
+  }
+
+  getRoleName(unit: Unit): string {
+    return this.roleMap[unit.roleId];
   }
 }

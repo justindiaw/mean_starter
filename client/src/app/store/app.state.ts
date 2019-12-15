@@ -8,12 +8,14 @@ import { GetRoles } from './app.actions';
 
 export interface AppStateModel {
   roles: Role[];
+  roleMap: any;
 }
 
 @State<AppStateModel>({
   name: 'app',
   defaults: {
-    roles: []
+    roles: [],
+    roleMap: {}
   }
 })
 export class AppState {
@@ -27,11 +29,26 @@ export class AppState {
     return state.roles;
   }
 
+  @Selector()
+  static roleMap(state: AppStateModel): any {
+    return state.roleMap;
+  }
+
   @Action(GetRoles)
   getRoles(ctx: StateContext<AppStateModel>, { }: GetRoles): Observable<void> {
     return this.roleService.getRoles()
       .pipe(map(roles => {
-        ctx.patchState({ roles: roles });
+        ctx.patchState({ roles: roles, roleMap: this.getRoleMap(roles) });
       }));
+  }
+
+  private getRoleMap(roles: Role[]): any {
+    const roleMap = {};
+
+    roles.forEach(role => {
+      roleMap[role._id] = role.name;
+    });
+
+    return roleMap;
   }
 }
