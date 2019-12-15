@@ -1,21 +1,21 @@
-import { TeacherOverview } from '../models/teacher-overview';
+import { Unit } from '../models/unit';
 
-export class LoadTeacherOverview {
+export class LoadUnits {
   public static readonly type = '[OverviewState] Load Teacher Overview';
   constructor() { }
 }
 
-export class AddTeacher {
+export class AddUnit {
   public static readonly type = '[OverviewState] Add New Teacher';
-  constructor(public teacher: TeacherOverview) { }
+  constructor(public unit: Unit) { }
 }
 
-export class DeleteTeacher {
+export class DeleteUnit {
   public static readonly type = '[OverviewState] Delete Teacher';
-  constructor(public teacher: TeacherOverview) { }
+  constructor(public unit: Unit) { }
 }
 
-export class UpdateTeacher {
+export class UpdateUnit {
   public static readonly type = '[OverviewState] Update Teacher';
-  constructor(public teacher: TeacherOverview) { }
+  constructor(public unit: Unit) { }
 }

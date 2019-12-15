@@ -3,11 +3,11 @@
   <mat-icon>add</mat-icon>Add
 </button>
 
-<li *ngFor="let teacher of teachers$ | async">
-  {{teacher._id}}{{teacher.firstName}} {{teacher.lastName}}
+<li *ngFor="let unit of units$ | async">
+  {{unit._id}}{{unit.firstName}} {{unit.lastName}}
   <button mat-flat-button
-    (click)="onClickViewEdit(teacher)">View/Edit</button>
-  <button mat-flat-button (click)="onClickDelete(teacher)">
+    (click)="onClickViewEdit(unit)">View/Edit</button>
+  <button mat-flat-button (click)="onClickDelete(unit)">
     <mat-icon>delete</mat-icon>
   </button>
 </li>

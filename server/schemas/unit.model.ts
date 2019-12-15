@@ -1,6 +1,6 @@
 import * as mongoose from 'mongoose';
 
-const teacherSchema = new mongoose.Schema({
+const unitSchema = new mongoose.Schema({
     firstName: {
         type: String
     },
@@ -8,5 +8,5 @@ const teacherSchema = new mongoose.Schema({
         type: String
     }
 });
-const Teacher = mongoose.model('Teacher', teacherSchema);
-export default Teacher;
+const Unit = mongoose.model('Unit', unitSchema, 'units');
+export default Unit;

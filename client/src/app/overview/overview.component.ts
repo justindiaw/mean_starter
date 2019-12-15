@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { Select, Store } from '@ngxs/store';
 
-import { TeacherOverview } from './models/teacher-overview';
-import { AddTeacher, DeleteTeacher, LoadTeacherOverview, UpdateTeacher } from './store/overview-state.actions';
+import { Unit } from './models/unit';
+import { AddUnit, DeleteUnit, LoadUnits, UpdateUnit } from './store/overview-state.actions';
 import { OverviewState } from './store/overview-state.state';
-import { ViewEditTeacherDialogComponent } from './view-edit-teacher-dialog/view-edit-teacher-dialog.component';
+import { ViewEditUnitDialogComponent } from './view-edit-unit-dialog/view-edit-unit-dialog.component';
 
 @Component({
   selector: 'app-overview',
@@ -13,7 +13,7 @@ import { ViewEditTeacherDialogComponent } from './view-edit-teacher-dialog/view-
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit {
-  @Select(OverviewState.teachers) teachers$: TeacherOverview[];
+  @Select(OverviewState.units) units$: Unit[];
 
   constructor(
     public dialogRef: MatDialog,
@@ -25,11 +25,11 @@ export class OverviewComponent implements OnInit {
   }
 
   load(): void {
-    this.store.dispatch(new LoadTeacherOverview());
+    this.store.dispatch(new LoadUnits());
   }
 
-  onClickViewEdit(teacher?: TeacherOverview): void {
-    const dialog = this.dialogRef.open(ViewEditTeacherDialogComponent, {
+  onClickViewEdit(teacher?: Unit): void {
+    const dialog = this.dialogRef.open(ViewEditUnitDialogComponent, {
       width: '600px',
       data: teacher ? teacher : null
     });
@@ -37,15 +37,15 @@ export class OverviewComponent implements OnInit {
     dialog.componentInstance.cancel.subscribe(() => dialog.close());
     dialog.componentInstance.save.subscribe(teacherData => {
       if (!!teacher) {
-        this.store.dispatch(new UpdateTeacher(teacherData));
+        this.store.dispatch(new UpdateUnit(teacherData));
       } else {
-        this.store.dispatch(new AddTeacher(teacherData));
+        this.store.dispatch(new AddUnit(teacherData));
       }
       dialog.close();
     });
   }
 
-  onClickDelete(teacher: TeacherOverview): void {
-    this.store.dispatch(new DeleteTeacher(teacher));
+  onClickDelete(teacher: Unit): void {
+    this.store.dispatch(new DeleteUnit(teacher));
   }
 }

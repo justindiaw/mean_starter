@@ -1,15 +1,15 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 
-import { TeacherOverview } from '../models/teacher-overview';
+import { Unit } from '../models/unit';
 import { OverviewService } from '../services/overview.service';
-import { AddTeacher, DeleteTeacher, LoadTeacherOverview, UpdateTeacher } from './overview-state.actions';
+import { AddUnit, DeleteUnit, LoadUnits, UpdateUnit } from './overview-state.actions';
 
 export interface OverviewStateModel {
-  teachers: TeacherOverview[];
+  units: Unit[];
 }
 
 export const defaultOverviewState = {
-  teachers: []
+  units: []
 };
 
 @State<OverviewStateModel>({
@@ -24,39 +24,39 @@ export class OverviewState {
   }
 
   @Selector()
-  public static teachers(state: OverviewStateModel) {
-    return state.teachers;
+  public static units(state: OverviewStateModel) {
+    return state.units;
   }
 
-  @Action(LoadTeacherOverview)
-  loadOverview(ctx: StateContext<OverviewStateModel>, { }: LoadTeacherOverview) {
+  @Action(LoadUnits)
+  loadUnits(ctx: StateContext<OverviewStateModel>, { }: LoadUnits) {
     this.overviewService.getTeacherOverview()
       .subscribe(data => {
-        ctx.patchState({ teachers: data });
+        ctx.patchState({ units: data });
       });
   }
 
-  @Action(AddTeacher)
-  addTeacher(ctx: StateContext<OverviewStateModel>, { teacher }: AddTeacher) {
-    this.overviewService.addTeacher(teacher)
+  @Action(AddUnit)
+  addUnit(ctx: StateContext<OverviewStateModel>, { unit }: AddUnit) {
+    this.overviewService.addTeacher(unit)
       .subscribe(() => {
-        ctx.dispatch(new LoadTeacherOverview());
+        ctx.dispatch(new LoadUnits());
       });
   }
 
-  @Action(DeleteTeacher)
-  deleteTeacher(ctx: StateContext<OverviewStateModel>, { teacher }: DeleteTeacher) {
-    this.overviewService.deleteTeacher(teacher)
+  @Action(DeleteUnit)
+  deleteUnit(ctx: StateContext<OverviewStateModel>, { unit }: DeleteUnit) {
+    this.overviewService.deleteTeacher(unit)
       .subscribe(() => {
-        ctx.dispatch(new LoadTeacherOverview());
+        ctx.dispatch(new LoadUnits());
       });
   }
 
-  @Action(UpdateTeacher)
-  updateTeacher(ctx: StateContext<OverviewStateModel>, { teacher }: UpdateTeacher) {
-    this.overviewService.updateTeacher(teacher)
+  @Action(UpdateUnit)
+  updateUnit(ctx: StateContext<OverviewStateModel>, { unit }: UpdateUnit) {
+    this.overviewService.updateTeacher(unit)
       .subscribe(teacherResult => {
-        ctx.dispatch(new LoadTeacherOverview());
+        ctx.dispatch(new LoadUnits());
       });
   }
 }

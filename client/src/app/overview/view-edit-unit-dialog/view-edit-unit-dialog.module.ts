@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule } from '@angular/material';
 
-import { ViewEditTeacherDialogComponent } from './view-edit-teacher-dialog.component';
+import { ViewEditUnitDialogComponent } from './view-edit-unit-dialog.component';
 
 const materials = [
   MatButtonModule,
@@ -13,11 +13,11 @@ const materials = [
 ];
 
 @NgModule({
-  declarations: [ViewEditTeacherDialogComponent],
+  declarations: [ViewEditUnitDialogComponent],
   imports: [
     CommonModule,
     FormsModule,
     ...materials
   ]
 })
-export class ViewEditTeacherDialogModule { }
+export class ViewEditUnitDialogModule { }

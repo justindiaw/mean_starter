@@ -8,8 +8,8 @@ import { OverviewRoutingModule } from './overview-routing.module';
 import { OverviewComponent } from './overview.component';
 import { OverviewService } from './services/overview.service';
 import { OverviewState } from './store/overview-state.state';
-import { ViewEditTeacherDialogComponent } from './view-edit-teacher-dialog/view-edit-teacher-dialog.component';
-import { ViewEditTeacherDialogModule } from './view-edit-teacher-dialog/view-edit-teacher-dialog.module';
+import { ViewEditUnitDialogComponent } from './view-edit-unit-dialog/view-edit-unit-dialog.component';
+import { ViewEditUnitDialogModule } from './view-edit-unit-dialog/view-edit-unit-dialog.module';
 
 const materials = [
   MatButtonModule,
@@ -22,7 +22,7 @@ const materials = [
   imports: [
     CommonModule,
     OverviewRoutingModule,
-    ViewEditTeacherDialogModule,
+    ViewEditUnitDialogModule,
     HttpClientModule,
     NgxsModule.forFeature([OverviewState]),
     ...materials
@@ -31,7 +31,7 @@ const materials = [
     OverviewService
   ],
   entryComponents: [
-    ViewEditTeacherDialogComponent
+    ViewEditUnitDialogComponent
   ]
 })
 export class OverviewModule { }

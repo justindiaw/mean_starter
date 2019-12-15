@@ -28,13 +28,6 @@ export default class App extends Server {
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(cors());
-        // this.app.get('/test', (request, response) => {
-        //     db.collection('teachers')
-        //         .find({})
-        //         .toArray((error, result) => {
-        //             response.send(result);
-        //         });
-        // });
     }
 
 
