@@ -6,11 +6,11 @@ import { Unit } from '../models/unit';
 
 @Injectable()
 export class OverviewService {
-
+  readonly apiPrefix = 'api/units';
   constructor(private http: HttpClient) { }
 
   getTeacherOverview(): Observable<Unit[]> {
-    return this.http.get<Unit[]>('http://localhost:3000/api/units');
+    return this.http.get<Unit[]>(`${this.apiPrefix}`);
   }
 
   addTeacher(unit: Unit): Observable<any> {
