@@ -50,6 +50,23 @@ export class OverviewComponent implements OnInit {
     });
   }
 
+  onClickCheckIn(teacher?: Unit): void {
+    const dialog = this.dialogRef.open(ViewEditUnitDialogComponent, {
+      width: '600px',
+      data: teacher ? teacher : null
+    });
+
+    dialog.componentInstance.cancel.subscribe(() => dialog.close());
+    dialog.componentInstance.save.subscribe(teacherData => {
+      if (!!teacher) {
+        this.store.dispatch(new UpdateUnit(teacherData));
+      } else {
+        this.store.dispatch(new AddUnit(teacherData));
+      }
+      dialog.close();
+    });
+  }
+
   onClickDelete(teacher: Unit): void {
     this.store.dispatch(new DeleteUnit(teacher));
   }
