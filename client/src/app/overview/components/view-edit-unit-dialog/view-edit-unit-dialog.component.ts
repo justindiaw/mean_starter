@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Role } from 'src/app/model/role';
 import { AppState } from 'src/app/store/app.state';
 
-import { Unit } from '../models/unit';
+import { Unit } from '../../models/unit';
 
 @Component({
   selector: 'app-view-edit-unit-dialog',

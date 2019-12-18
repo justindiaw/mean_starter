@@ -5,6 +5,7 @@
 <li *ngFor="let unit of units$ | async">
   {{unit.firstName}} {{unit.lastName}} {{getRoleName(unit)}}
   <button mat-flat-button (click)="onClickViewEdit(unit)">View/Edit</button>
+  <button mat-flat-button>Check In</button>
   <button mat-flat-button (click)="onClickDelete(unit)">
     <mat-icon>delete</mat-icon>
   </button>
