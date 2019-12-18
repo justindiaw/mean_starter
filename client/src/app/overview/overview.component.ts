@@ -3,10 +3,10 @@ import { MatDialog } from '@angular/material';
 import { Select, Store } from '@ngxs/store';
 
 import { AppState } from '../store/app.state';
+import { ViewEditUnitDialogComponent } from './components/view-edit-unit-dialog/view-edit-unit-dialog.component';
 import { Unit } from './models/unit';
 import { AddUnit, DeleteUnit, LoadUnits, UpdateUnit } from './store/overview-state.actions';
 import { OverviewState } from './store/overview-state.state';
-import { ViewEditUnitDialogComponent } from './view-edit-unit-dialog/view-edit-unit-dialog.component';
 
 @Component({
   selector: 'app-overview',
