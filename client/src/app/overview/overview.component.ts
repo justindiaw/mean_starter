@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material';
 import { Select, Store } from '@ngxs/store';
 
 import { AppState } from '../store/app.state';
+import { CheckInDialogComponent } from './components/check-in-dialog/check-in-dialog.component';
 import { ViewEditUnitDialogComponent } from './components/view-edit-unit-dialog/view-edit-unit-dialog.component';
 import { Unit } from './models/unit';
 import { AddUnit, DeleteUnit, LoadUnits, UpdateUnit } from './store/overview-state.actions';
@@ -33,15 +34,15 @@ export class OverviewComponent implements OnInit {
     this.store.dispatch(new LoadUnits());
   }
 
-  onClickViewEdit(teacher?: Unit): void {
+  onClickViewEdit(unit?: Unit): void {
     const dialog = this.dialogRef.open(ViewEditUnitDialogComponent, {
       width: '600px',
-      data: teacher ? teacher : null
+      data: unit ? unit : null
     });
 
     dialog.componentInstance.cancel.subscribe(() => dialog.close());
     dialog.componentInstance.save.subscribe(teacherData => {
-      if (!!teacher) {
+      if (!!unit) {
         this.store.dispatch(new UpdateUnit(teacherData));
       } else {
         this.store.dispatch(new AddUnit(teacherData));
@@ -50,21 +51,14 @@ export class OverviewComponent implements OnInit {
     });
   }
 
-  onClickCheckIn(teacher?: Unit): void {
-    const dialog = this.dialogRef.open(ViewEditUnitDialogComponent, {
+  onClickCheckIn(unit?: Unit): void {
+    const dialog = this.dialogRef.open(CheckInDialogComponent, {
       width: '600px',
-      data: teacher ? teacher : null
+      data: unit ? unit : null
     });
 
     dialog.componentInstance.cancel.subscribe(() => dialog.close());
-    dialog.componentInstance.save.subscribe(teacherData => {
-      if (!!teacher) {
-        this.store.dispatch(new UpdateUnit(teacherData));
-      } else {
-        this.store.dispatch(new AddUnit(teacherData));
-      }
-      dialog.close();
-    });
+    dialog.componentInstance.save.subscribe();
   }
 
   onClickDelete(teacher: Unit): void {

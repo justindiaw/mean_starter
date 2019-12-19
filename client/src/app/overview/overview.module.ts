@@ -4,6 +4,8 @@ import { MatButtonModule, MatDialogModule, MatIconModule } from '@angular/materi
 import { NgxsModule } from '@ngxs/store';
 
 import { RoleService } from '../services/role.service';
+import { CheckInDialogComponent } from './components/check-in-dialog/check-in-dialog.component';
+import { CheckInDialogModule } from './components/check-in-dialog/check-in-dialog.module';
 import { ViewEditUnitDialogComponent } from './components/view-edit-unit-dialog/view-edit-unit-dialog.component';
 import { ViewEditUnitDialogModule } from './components/view-edit-unit-dialog/view-edit-unit-dialog.module';
 import { OverviewRoutingModule } from './overview-routing.module';
@@ -23,6 +25,7 @@ const materials = [
     CommonModule,
     OverviewRoutingModule,
     ViewEditUnitDialogModule,
+    CheckInDialogModule,
     NgxsModule.forFeature([OverviewState]),
     ...materials
   ],
@@ -31,7 +34,8 @@ const materials = [
     RoleService
   ],
   entryComponents: [
-    ViewEditUnitDialogComponent
+    ViewEditUnitDialogComponent,
+    CheckInDialogComponent
   ]
 })
 export class OverviewModule { }
