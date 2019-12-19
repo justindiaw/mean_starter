@@ -1,14 +1,15 @@
 import { Controller, Delete, Get, Post, Put } from '@overnightjs/core';
 import { Request, Response } from 'express';
 
+import Role from '../schemas/role.model';
 import Unit from '../schemas/unit.model';
 
-@Controller('api/units')
-export class UnitController {
+@Controller('api/check')
+export class RoleController {
 
     @Get('')
-    private getUnits(req: Request, res: Response): void {
-        Unit.find({}).then(
+    getRoles(req: Request, res: Response): void {
+        Role.find({}).then(
             result => {
                 res.status(200).json(result);
             }
@@ -16,7 +17,7 @@ export class UnitController {
     }
 
     @Put(':id')
-    private putUnit(req: Request, res: Response) {
+    putUnit(req: Request, res: Response) {
         Unit.findById(req.params.id, (err, unit) => {
             if (req.body._id) {
                 delete req.body._id;
@@ -32,11 +33,10 @@ export class UnitController {
     }
 
     @Post('')
-    private addUnit(req: Request, res: Response): void {
+    addUnit(req: Request, res: Response): void {
         const newUnit = new Unit({
             firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            roleId: req.body.roleId
+            lastName: req.body.lastName
         });
         newUnit.save().then(result => {
             res.status(200).json(result);
@@ -44,7 +44,7 @@ export class UnitController {
     }
 
     @Delete(':id')
-    private deleteUnit(req: Request, res: Response) {
+    deleteUnit(req: Request, res: Response) {
         Unit.findById(req.params.id, (error, unit) => {
             unit.remove(error2 => {
                 if (error2) {
