@@ -1,18 +1,26 @@
 import { Controller, Delete, Get, Post, Put } from '@overnightjs/core';
 import { Request, Response } from 'express';
 
+import ActiveCheck from '../schemas/active-check.model';
 import Unit from '../schemas/unit.model';
 
 @Controller('api/units')
 export class UnitController {
 
     @Get('')
-    private getUnits(req: Request, res: Response): void {
-        Unit.find({}).then(
-            result => {
-                res.status(200).json(result);
-            }
-        );
+    getUnits(req: Request, res: Response): void {
+        Unit.find({}).then(units => {
+            ActiveCheck.find({}).then(activeChecks => {
+                units.forEach(unit => {
+                    const checkInCheck = activeChecks.find(activeCheck => activeCheck.unitId === unit._id);
+                    if (checkInCheck) {
+                        console.log(checkInCheck);
+                        unit.checkInCheck = checkInCheck;
+                    }
+                });
+                res.status(200).json(units);
+            });
+        });
     }
 
     @Put(':id')

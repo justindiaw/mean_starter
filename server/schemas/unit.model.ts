@@ -1,6 +1,15 @@
 import { ObjectId } from 'bson';
 import * as mongoose from 'mongoose';
 
+import { ActiveCheck } from './active-check.model';
+
+export interface Unit extends mongoose.Document {
+    firstName: String;
+    lastName: String;
+    roleId: ObjectId;
+    checkInCheck?: ActiveCheck;
+}
+
 const unitSchema = new mongoose.Schema({
     firstName: {
         type: String
@@ -12,5 +21,5 @@ const unitSchema = new mongoose.Schema({
         type: ObjectId
     }
 });
-const Unit = mongoose.model('Unit', unitSchema);
+const Unit = mongoose.model<Unit>('Unit', unitSchema);
 export default Unit;
