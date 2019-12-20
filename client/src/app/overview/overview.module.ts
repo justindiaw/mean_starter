@@ -10,7 +10,9 @@ import { ViewEditUnitDialogComponent } from './components/view-edit-unit-dialog/
 import { ViewEditUnitDialogModule } from './components/view-edit-unit-dialog/view-edit-unit-dialog.module';
 import { OverviewRoutingModule } from './overview-routing.module';
 import { OverviewComponent } from './overview.component';
+import { CheckService } from './services/check.service';
 import { OverviewService } from './services/overview.service';
+import { CheckState } from './store/check.state';
 import { OverviewState } from './store/overview-state.state';
 
 const materials = [
@@ -26,12 +28,13 @@ const materials = [
     OverviewRoutingModule,
     ViewEditUnitDialogModule,
     CheckInDialogModule,
-    NgxsModule.forFeature([OverviewState]),
+    NgxsModule.forFeature([OverviewState, CheckState]),
     ...materials
   ],
   providers: [
     OverviewService,
-    RoleService
+    RoleService,
+    CheckService
   ],
   entryComponents: [
     ViewEditUnitDialogComponent,

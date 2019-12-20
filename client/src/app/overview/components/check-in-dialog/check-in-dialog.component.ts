@@ -21,7 +21,7 @@ export class CheckInDialogComponent implements OnInit {
   }
 
   onSave(): void {
-    this.save.emit();
+    this.save.emit(this.data);
   }
 
   onCancel(): void {

@@ -6,6 +6,7 @@ import { AppState } from '../store/app.state';
 import { CheckInDialogComponent } from './components/check-in-dialog/check-in-dialog.component';
 import { ViewEditUnitDialogComponent } from './components/view-edit-unit-dialog/view-edit-unit-dialog.component';
 import { Unit } from './models/unit';
+import { CheckIn, CheckOut } from './store/check.actions';
 import { AddUnit, DeleteUnit, LoadUnits, UpdateUnit } from './store/overview-state.actions';
 import { OverviewState } from './store/overview-state.state';
 
@@ -41,11 +42,11 @@ export class OverviewComponent implements OnInit {
     });
 
     dialog.componentInstance.cancel.subscribe(() => dialog.close());
-    dialog.componentInstance.save.subscribe(teacherData => {
+    dialog.componentInstance.save.subscribe(unitData => {
       if (!!unit) {
-        this.store.dispatch(new UpdateUnit(teacherData));
+        this.store.dispatch(new UpdateUnit(unitData));
       } else {
-        this.store.dispatch(new AddUnit(teacherData));
+        this.store.dispatch(new AddUnit(unitData));
       }
       dialog.close();
     });
@@ -58,7 +59,21 @@ export class OverviewComponent implements OnInit {
     });
 
     dialog.componentInstance.cancel.subscribe(() => dialog.close());
-    dialog.componentInstance.save.subscribe();
+    dialog.componentInstance.save.subscribe(unitData => {
+      this.store.dispatch(new CheckIn(unitData._id));
+    });
+  }
+
+  onClickCheckOut(unit?: Unit): void {
+    const dialog = this.dialogRef.open(CheckInDialogComponent, {
+      width: '600px',
+      data: unit ? unit : null
+    });
+
+    dialog.componentInstance.cancel.subscribe(() => dialog.close());
+    dialog.componentInstance.save.subscribe(unitData => {
+      this.store.dispatch(new CheckOut(unitData._id));
+    });
   }
 
   onClickDelete(teacher: Unit): void {
