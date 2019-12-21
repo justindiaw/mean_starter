@@ -9,7 +9,8 @@ export interface ActiveCheck extends mongoose.Document {
 
 const activeCheckSchema = new mongoose.Schema({
     unitId: {
-        type: mongoose.SchemaTypes.ObjectId
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Unit'
     },
     checkInTime: {
         type: mongoose.SchemaTypes.Date
@@ -19,5 +20,5 @@ const activeCheckSchema = new mongoose.Schema({
         default: null
     }
 });
-const ActiveCheck = mongoose.model<ActiveCheck>('activeCheck', activeCheckSchema);
+const ActiveCheck = mongoose.model<ActiveCheck>('ActiveCheck', activeCheckSchema);
 export default ActiveCheck;

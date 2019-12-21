@@ -31,7 +31,7 @@ export class ViewEditUnitDialogComponent implements OnInit {
         _id: '',
         firstName: '',
         lastName: '',
-        roleId: ''
+        role: ''
       };
   }
 

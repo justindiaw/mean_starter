@@ -81,6 +81,6 @@ export class OverviewComponent implements OnInit {
   }
 
   getRoleName(unit: Unit): string {
-    return this.roleMap[unit.roleId];
+    return this.roleMap[unit.role];
   }
 }

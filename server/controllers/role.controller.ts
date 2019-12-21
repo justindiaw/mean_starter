@@ -22,7 +22,7 @@ export class RoleController {
             if (req.body._id) {
                 delete req.body._id;
             }
-            for (const property in req.body ) {
+            for (const property in req.body) {
                 if (req.body.hasOwnProperty(property)) {
                     unit[property] = req.body[property];
                 }
@@ -45,7 +45,8 @@ export class RoleController {
 
     @Delete(':id')
     deleteUnit(req: Request, res: Response) {
-        Unit.findById(req.params.id, (error, unit) => {
+        const unitId = req.params.id;
+        Unit.findById(unitId, (error, unit) => {
             unit.remove(error2 => {
                 if (error2) {
                     res.status(500).send(error2);

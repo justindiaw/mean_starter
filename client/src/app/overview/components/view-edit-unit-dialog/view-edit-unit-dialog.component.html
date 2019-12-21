@@ -16,7 +16,7 @@
 
     <mat-form-field>
       <mat-label>Role</mat-label>
-      <mat-select [(value)]="unit.roleId">
+      <mat-select [(value)]="unit.role">
         <mat-option *ngFor="let role of (roles$ | async)" [value]="role._id">
           {{role.name}}
         </mat-option>
