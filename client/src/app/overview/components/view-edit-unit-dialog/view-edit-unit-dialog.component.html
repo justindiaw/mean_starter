@@ -1,0 +1,30 @@
+<mat-card-header>
+  View/Edit
+</mat-card-header>
+<mat-card-content>
+  <pre>
+    {{unit | json}}
+  </pre>
+  <div class="form-container">
+    <mat-form-field>
+      <input matInput placeholder="Last Name" [(ngModel)]="unit.firstName">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="First Name" [(ngModel)]="unit.lastName">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Role</mat-label>
+      <mat-select [(value)]="unit.role">
+        <mat-option *ngFor="let role of (roles$ | async)" [value]="role._id">
+          {{role.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</mat-card-content>
+<mat-card-footer>
+  <button mat-flat-button (click)="onCancel()">Cancel</button>
+  <button mat-flat-button (click)="onSave()">Save</button>
+</mat-card-footer>

@@ -1,15 +1,27 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { MockTeachers } from 'src/app/mocks/mock-teachers';
+import { Observable } from 'rxjs';
 
-import { TeacherOverview } from '../models/teacher-overview';
+import { Unit } from '../models/unit';
 
 @Injectable()
 export class OverviewService {
+  readonly apiPrefix = 'api/units';
+  constructor(private http: HttpClient) { }
 
-  constructor() { }
+  getTeacherOverview(): Observable<Unit[]> {
+    return this.http.get<Unit[]>(this.apiPrefix);
+  }
 
-  getTeacherOverview(): Observable<TeacherOverview[]> {
-    return of(MockTeachers);
+  addTeacher(unit: Unit): Observable<void> {
+    return this.http.post<any>(this.apiPrefix, unit);
+  }
+
+  deleteTeacher(unit: Unit): Observable<void> {
+    return this.http.delete<any>(`${this.apiPrefix}/${unit._id}`);
+  }
+
+  updateTeacher(unit: Unit): Observable<void> {
+    return this.http.put<any>(`${this.apiPrefix}/${unit._id}`, unit);
   }
 }
