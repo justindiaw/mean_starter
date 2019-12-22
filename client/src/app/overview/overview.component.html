@@ -1,18 +1,14 @@
-<button mat-raised-button
-  (click)="onClickViewEdit()">
+<button mat-raised-button (click)="onClickViewEdit()">
   <mat-icon>add</mat-icon>Add
 </button>
 
 <li *ngFor="let unit of units$ | async">
   {{unit.firstName}} {{unit.lastName}} {{getRoleName(unit)}}
-  <button mat-flat-button
-    (click)="onClickViewEdit(unit)">View/Edit</button>
-  <button mat-flat-button
-    (click)="onClickCheckIn(unit)">Check In</button>
-  <button mat-flat-button
-    (click)="onClickCheckOut(unit)">Check Out</button>
-  <button mat-flat-button
-    (click)="onClickDelete(unit)">
+  <button mat-flat-button (click)="onClickViewEdit(unit)">View/Edit</button>
+  <button mat-flat-button (click)="onClickCheckIn(unit)">Check In</button>
+  <button mat-flat-button (click)="onClickCheckOut(unit)">Check Out</button>
+  <span *ngIf="unit.activeCheck">{{unit.activeCheck.checkInTime}}</span>
+  <button mat-flat-button (click)="onClickDelete(unit)">
     <mat-icon>delete</mat-icon>
   </button>
 </li>

@@ -61,6 +61,7 @@ export class OverviewComponent implements OnInit {
     dialog.componentInstance.cancel.subscribe(() => dialog.close());
     dialog.componentInstance.save.subscribe(unitData => {
       this.store.dispatch(new CheckIn(unitData._id));
+      dialog.close();
     });
   }
 
@@ -73,6 +74,7 @@ export class OverviewComponent implements OnInit {
     dialog.componentInstance.cancel.subscribe(() => dialog.close());
     dialog.componentInstance.save.subscribe(unitData => {
       this.store.dispatch(new CheckOut(unitData._id));
+      dialog.close();
     });
   }
 
