@@ -7,7 +7,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "start": "concurrently \"npm run serve-api\" \"npm run serve\"",
+    "start": "concurrently \"npm run serve-api\" \"npm run serve\" --raw",
     "serve": "ng serve",
     "serve-api": "ts-node-dev --project server/tsconfig.json server/server.ts"
   },
