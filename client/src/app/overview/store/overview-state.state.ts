@@ -24,7 +24,7 @@ export class OverviewState {
   }
 
   @Selector()
-  public static units(state: OverviewStateModel) {
+  static units(state: OverviewStateModel) {
     return state.units;
   }
 

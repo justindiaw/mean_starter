@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Select, Store } from '@ngxs/store';
+import { Observable } from 'rxjs';
 
 import { AppState } from '../store/app.state';
 import { CheckInDialogComponent } from './components/check-in-dialog/check-in-dialog.component';
@@ -16,18 +17,18 @@ import { OverviewState } from './store/overview-state.state';
   styleUrls: ['./overview.component.scss']
 })
 export class OverviewComponent implements OnInit {
-  @Select(OverviewState.units) units$: Unit[];
+  @Select(OverviewState.units) units$: Observable<Unit[]>;
 
   get roleMap(): any {
     return this.store.selectSnapshot(AppState.roleMap);
   }
 
-  get dataSource(): MatTableDataSource<Unit> {
-    return new MatTableDataSource(this.store.selectSnapshot(OverviewState.units));
-  }
+  // get dataSource(): MatTableDataSource<Unit> {
+  //   return new MatTableDataSource(this.store.selectSnapshot(OverviewState.units));
+  // }
 
   displayedColumns: string[] = ['name', 'role', 'checkIn', 'checkOut', 'checkInTime', 'viewEdit', 'delete'];
-  // dataSource: MatTableDataSource<Unit>;
+  dataSource: MatTableDataSource<Unit>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -39,6 +40,7 @@ export class OverviewComponent implements OnInit {
 
   ngOnInit() {
     this.load();
+    this.bindToUnitsChange();
   }
 
   load(): void {
@@ -97,6 +99,10 @@ export class OverviewComponent implements OnInit {
   }
 
   private bindToUnitsChange(): void {
-
+    this.units$.subscribe(() => {
+      this.dataSource = new MatTableDataSource(this.store.selectSnapshot(OverviewState.units));
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 }
