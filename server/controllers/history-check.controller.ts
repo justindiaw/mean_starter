@@ -15,14 +15,16 @@ export class HistoryCheckController {
     @Get(':unitId/:year/:month?/:day?')
     getHistoryChecks(req: Request, res: Response): void {
         this.historyCheckService.getHitoryChecks(req.params.unitId)
-            .then(checks => res.status(200).json(checks));
+            .then(checks => {
+                console.log(checks);
+                res.status(200).json(checks);
+            });
     }
 
     @Post('out/:unitId')
     checkOut(req: Request, res: Response) {
         ActiveCheck.findOne({ unitId: req.params.unitId }, (error, check) => {
             if (check) {
-
                 const newHistoryCheck = new HistoryCheck({
                     unitId: check.unitId,
                     checkInTime: check.checkInTime,
