@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatDialogModule, MatIconModule } from '@angular/material';
+import { MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatPaginatorModule, MatTableModule } from '@angular/material';
 import { NgxsModule } from '@ngxs/store';
 
 import { RoleService } from '../services/role.service';
@@ -18,7 +18,10 @@ import { OverviewState } from './store/overview-state.state';
 const materials = [
   MatButtonModule,
   MatIconModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTableModule,
+  MatFormFieldModule,
+  MatPaginatorModule
 ];
 
 @NgModule({

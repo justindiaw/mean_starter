@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Select, Store } from '@ngxs/store';
 
 import { AppState } from '../store/app.state';
@@ -21,6 +21,16 @@ export class OverviewComponent implements OnInit {
   get roleMap(): any {
     return this.store.selectSnapshot(AppState.roleMap);
   }
+
+  get dataSource(): MatTableDataSource<Unit> {
+    return new MatTableDataSource(this.store.selectSnapshot(OverviewState.units));
+  }
+
+  displayedColumns: string[] = ['name', 'role', 'checkIn', 'checkOut', 'checkInTime', 'viewEdit', 'delete'];
+  // dataSource: MatTableDataSource<Unit>;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     public dialogRef: MatDialog,
@@ -84,5 +94,9 @@ export class OverviewComponent implements OnInit {
 
   getRoleName(unit: Unit): string {
     return this.roleMap[unit.role];
+  }
+
+  private bindToUnitsChange(): void {
+
   }
 }
