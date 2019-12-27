@@ -1,35 +1,21 @@
-import { Controller, Post } from '@overnightjs/core';
+import { Controller, Get, Post } from '@overnightjs/core';
 import { Request, Response } from 'express';
 
 import ActiveCheck from '../schemas/active-check.model';
 import HistoryCheck from '../schemas/history-check.model';
-import Unit from '../schemas/unit.model';
+import { HistoryCheckService } from '../services';
 
-@Controller('api/check')
-export class CheckController {
+@Controller('api/history-check')
+export class HistoryCheckController {
 
-    @Post('in/:unitId')
-    checkIn(req: Request, res: Response): void {
-        const newCheck = new ActiveCheck({
-            unitId: req.params.unitId,
-            checkInTime: req.body.checkInTime
-        });
-        ActiveCheck.findOne({ unitId: req.params.unitId }, (error, check) => {
-            if (check) {
-                res.status(409).send('Already checked in...');
-            } else {
-                Unit.findOne({ _id: req.params.unitId }, (error2, unit) => {
-                    if (unit) {
-                        unit.set('activeCheck', newCheck._id);
-                        unit.save().then(() => {
-                            newCheck.save().then(result => {
-                                res.status(200).json(result);
-                            });
-                        });
-                    }
-                });
-            }
-        });
+    constructor(private historyCheckService: HistoryCheckService) {
+        this.historyCheckService = new HistoryCheckService();
+    }
+
+    @Get(':unitId/:year/:month?/:day?')
+    getHistoryChecks(req: Request, res: Response): void {
+        this.historyCheckService.getHitoryChecks(req.params.unitId)
+            .then(checks => res.status(200).json(checks));
     }
 
     @Post('out/:unitId')
