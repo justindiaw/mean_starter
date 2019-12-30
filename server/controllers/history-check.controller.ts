@@ -1,8 +1,8 @@
 import { Controller, Get, Post } from '@overnightjs/core';
 import { Request, Response } from 'express';
 
-import ActiveCheck from '../schemas/active-check.model';
-import HistoryCheck from '../schemas/history-check.model';
+import ActiveCheckModel from '../schemas/active-check.model';
+import HistoryCheckModel from '../schemas/history-check.model';
 import { HistoryCheckService } from '../services';
 
 @Controller('api/history-check')
@@ -23,9 +23,9 @@ export class HistoryCheckController {
 
     @Post('out/:unitId')
     checkOut(req: Request, res: Response) {
-        ActiveCheck.findOne({ unitId: req.params.unitId }, (error, check) => {
+        ActiveCheckModel.findOne({ unitId: req.params.unitId }, (error, check) => {
             if (check) {
-                const newHistoryCheck = new HistoryCheck({
+                const newHistoryCheck = new HistoryCheckModel({
                     unitId: check.unitId,
                     checkInTime: check.checkInTime,
                     checkOutTime: req.body.checkOutTime
