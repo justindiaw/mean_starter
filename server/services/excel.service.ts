@@ -1,23 +1,19 @@
-import { Types } from 'mongoose';
+import { Workbook } from 'exceljs';
 
-import HistoryCheck from '../schemas/history-check.model';
+import { HistoryCheck } from '../interfaces';
 
 export class ExcelService {
-    getHitoryChecks(unitId: string) {
-        return HistoryCheck.aggregate([
-            {
-                $project: {
-                    unitId: 1,
-                    checkInTime: 1,
-                    duration: { $subtract: ['$checkOutTime', '$checkInTime'] }
-                }
-            },
-            { $match: { unitId: Types.ObjectId(unitId) } }
-        ]);
-        // return HistoryCheck.find({ unitId: unitId }, (error) => {
-        //     if (error) {
-        //         throw error;
-        //     }
-        // });
+    getPersonalReport(historyChecks: HistoryCheck[]): Workbook {
+        const workBook = new Workbook();
+        const mainSheet = workBook.addWorksheet('Personal Daily Report');
+        mainSheet.columns = [
+            { key: '_id', header: '_id' },
+            { key: 'unitId', header: 'unitId' },
+            { key: 'checkInTime', header: 'checkInTime' },
+            { key: 'duration', header: 'duration' }
+        ];
+        mainSheet.addRows(historyChecks);
+
+        return workBook;
     }
 }
