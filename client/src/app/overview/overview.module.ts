@@ -5,6 +5,7 @@ import {
   MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
+  MatMenuModule,
   MatPaginatorModule,
   MatTableModule,
 } from '@angular/material';
@@ -29,7 +30,8 @@ const materials = [
   MatDialogModule,
   MatTableModule,
   MatFormFieldModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatMenuModule
 ];
 
 @NgModule({

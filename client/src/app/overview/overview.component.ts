@@ -27,7 +27,7 @@ export class OverviewComponent implements OnInit {
   //   return new MatTableDataSource(this.store.selectSnapshot(OverviewState.units));
   // }
 
-  displayedColumns: string[] = ['name', 'role', 'checkIn', 'checkOut', 'checkInTime', 'viewEdit', 'delete'];
+  displayedColumns: string[] = ['name', 'role', 'checkIn', 'checkOut', 'checkInTime', 'viewEdit', 'delete', 'more'];
   dataSource: MatTableDataSource<Unit>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
