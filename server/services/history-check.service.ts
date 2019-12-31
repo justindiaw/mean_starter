@@ -1,10 +1,10 @@
 import { Types } from 'mongoose';
 
-import HistoryCheck from '../schemas/history-check.model';
+import HistoryCheckModel from '../schemas/history-check.model';
 
 export class HistoryCheckService {
     getHitoryChecks(unitId: string) {
-        return HistoryCheck.aggregate([
+        return HistoryCheckModel.aggregate([
             {
                 $project: {
                     unitId: 1,
@@ -14,10 +14,5 @@ export class HistoryCheckService {
             },
             { $match: { unitId: Types.ObjectId(unitId) } }
         ]);
-        // return HistoryCheck.find({ unitId: unitId }, (error) => {
-        //     if (error) {
-        //         throw error;
-        //     }
-        // });
     }
 }
