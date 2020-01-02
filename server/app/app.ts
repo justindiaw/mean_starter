@@ -32,7 +32,7 @@ export default class App extends Server {
 
 
     private initDatabase(): void {
-        mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, dbName: DATABASE_NAME }, error => {
+        mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, dbName: DATABASE_NAME, useUnifiedTopology: true }, error => {
             if (error) {
                 console.log(error);
             }

@@ -1,9 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatDialogModule, MatIconModule } from '@angular/material';
+import {
+  MatButtonModule,
+  MatDialogModule,
+  MatFormFieldModule,
+  MatIconModule,
+  MatMenuModule,
+  MatPaginatorModule,
+  MatTableModule,
+} from '@angular/material';
 import { NgxsModule } from '@ngxs/store';
 
 import { RoleService } from '../services/role.service';
+import { SharedModule } from '../shared/shared.module';
 import { CheckInDialogComponent } from './components/check-in-dialog/check-in-dialog.component';
 import { CheckInDialogModule } from './components/check-in-dialog/check-in-dialog.module';
 import { ViewEditUnitDialogComponent } from './components/view-edit-unit-dialog/view-edit-unit-dialog.component';
@@ -18,7 +27,11 @@ import { OverviewState } from './store/overview-state.state';
 const materials = [
   MatButtonModule,
   MatIconModule,
-  MatDialogModule
+  MatDialogModule,
+  MatTableModule,
+  MatFormFieldModule,
+  MatPaginatorModule,
+  MatMenuModule
 ];
 
 @NgModule({
@@ -29,7 +42,8 @@ const materials = [
     ViewEditUnitDialogModule,
     CheckInDialogModule,
     NgxsModule.forFeature([OverviewState, CheckState]),
-    ...materials
+    ...materials,
+    SharedModule
   ],
   providers: [
     OverviewService,

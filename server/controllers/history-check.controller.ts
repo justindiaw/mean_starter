@@ -1,42 +1,49 @@
-import { Controller, Post } from '@overnightjs/core';
+import { Controller, Get, Post } from '@overnightjs/core';
 import { Request, Response } from 'express';
 
+import { HistoryCheck } from '../interfaces';
 import ActiveCheckModel from '../schemas/active-check.model';
 import HistoryCheckModel from '../schemas/history-check.model';
-import UnitModel from '../schemas/unit.model';
+import { ExcelService, HistoryCheckService } from '../services';
 
-@Controller('api/check')
-export class CheckController {
+const tempfile = require('tempfile');
 
-    @Post('in/:unitId')
-    checkIn(req: Request, res: Response): void {
-        const newCheck = new ActiveCheckModel({
-            unitId: req.params.unitId,
-            checkInTime: req.body.checkInTime
-        });
-        ActiveCheckModel.findOne({ unitId: req.params.unitId }, (error, check) => {
-            if (check) {
-                res.status(409).send('Already checked in...');
-            } else {
-                UnitModel.findOne({ _id: req.params.unitId }, (error2, unit) => {
-                    if (unit) {
-                        unit.set('activeCheck', newCheck._id);
-                        unit.save().then(() => {
-                            newCheck.save().then(result => {
-                                res.status(200).json(result);
-                            });
-                        });
-                    }
+@Controller('api/history-check')
+export class HistoryCheckController {
+
+    constructor(
+        private historyCheckService: HistoryCheckService,
+        private excelService: ExcelService
+    ) {
+        this.historyCheckService = new HistoryCheckService();
+        this.excelService = new ExcelService();
+    }
+
+    // @Get(':unitId/:year/:month?/:day?')
+    // getHistoryChecks(req: Request, res: Response): void {
+    //     this.historyCheckService.getHitoryChecks(req.params.unitId)
+    //         .then(checks => {
+    //             res.status(200).json(checks);
+    //         });
+    // }
+
+    @Get(':unitId/:year/:month?/:day?')
+    getHitoryChecksReport(req: Request, res: Response): void {
+        this.historyCheckService.getHitoryChecks(req.params.unitId)
+            .then((checks: HistoryCheck[]) => {
+                const workBook = this.excelService.getPersonalReport(checks);
+                const tempFilePath = tempfile('.xlsx');
+                workBook.xlsx.writeFile(tempFilePath).then(() => {
+                    res.status(200).sendFile(tempFilePath, error => console.log(error));
                 });
-            }
-        });
+            });
+
     }
 
     @Post('out/:unitId')
     checkOut(req: Request, res: Response) {
         ActiveCheckModel.findOne({ unitId: req.params.unitId }, (error, check) => {
             if (check) {
-
                 const newHistoryCheck = new HistoryCheckModel({
                     unitId: check.unitId,
                     checkInTime: check.checkInTime,

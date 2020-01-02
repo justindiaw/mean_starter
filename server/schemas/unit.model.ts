@@ -32,5 +32,5 @@ unitSchema.pre('remove', function (next) {
     next();
 });
 
-const Unit = mongoose.model<Unit>('Unit', unitSchema);
-export default Unit;
+const UnitModel = mongoose.model<Unit>('Unit', unitSchema);
+export default UnitModel;
