@@ -20,5 +20,5 @@ const activeCheckSchema = new mongoose.Schema({
         default: null
     }
 });
-const ActiveCheckModel = mongoose.model<ActiveCheck>('ActiveCheck', activeCheckSchema);
-export default ActiveCheckModel;
+const ActiveCheck = mongoose.model<ActiveCheck>('ActiveCheck', activeCheckSchema);
+export default ActiveCheck;

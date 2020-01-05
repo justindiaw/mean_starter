@@ -1,9 +1,9 @@
 import { Workbook } from 'exceljs';
 
-import { HistoryCheck } from '../interfaces';
+import { HistoryCheckItem } from '../interfaces';
 
 export class ExcelService {
-    getPersonalReport(historyChecks: HistoryCheck[]): Workbook {
+    getPersonalReport(historyChecks: HistoryCheckItem[]): Workbook {
         const workBook = new Workbook();
         const mainSheet = workBook.addWorksheet('Personal Daily Report');
         mainSheet.columns = [
