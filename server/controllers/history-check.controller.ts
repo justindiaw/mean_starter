@@ -1,7 +1,7 @@
 import { Controller, Get, Post } from '@overnightjs/core';
 import { Request, Response } from 'express';
 
-import { HistoryCheckItem } from '../interfaces';
+import { IHistoryCheck } from '../interfaces';
 import ActiveCheck from '../schemas/active-check.model';
 import HistoryCheck from '../schemas/history-check.model';
 import { ExcelService, HistoryCheckService } from '../services';
@@ -22,7 +22,7 @@ export class HistoryCheckController {
     @Get(':unitId/:year/:month?/:day?')
     getHitoryChecksReport(req: Request, res: Response): void {
         this.historyCheckService.getHitoryChecks(req.params.unitId)
-            .then((checks: HistoryCheckItem[]) => {
+            .then((checks: IHistoryCheck[]) => {
                 const workBook = this.excelService.getPersonalReport(checks);
                 const tempFilePath = tempfile('.xlsx');
                 workBook.xlsx.writeFile(tempFilePath).then(() => {
