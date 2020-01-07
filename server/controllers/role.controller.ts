@@ -1,15 +1,15 @@
 import { Controller, Delete, Get, Post, Put } from '@overnightjs/core';
 import { Request, Response } from 'express';
 
-import RoleModel from '../schemas/role.model';
-import UnitModel from '../schemas/unit.model';
+import Role from '../schemas/role.model';
+import Unit from '../schemas/unit.model';
 
 @Controller('api/roles')
 export class RoleController {
 
     @Get('')
     getRoles(req: Request, res: Response): void {
-        RoleModel.find({}).then(
+        Role.find({}).then(
             result => {
                 res.status(200).json(result);
             }
@@ -18,7 +18,7 @@ export class RoleController {
 
     @Put(':id')
     putUnit(req: Request, res: Response) {
-        UnitModel.findById(req.params.id, (err, unit) => {
+        Unit.findById(req.params.id, (err, unit) => {
             if (req.body._id) {
                 delete req.body._id;
             }
@@ -34,7 +34,7 @@ export class RoleController {
 
     @Post('')
     addUnit(req: Request, res: Response): void {
-        const newUnit = new UnitModel({
+        const newUnit = new Unit({
             firstName: req.body.firstName,
             lastName: req.body.lastName
         });
@@ -46,7 +46,7 @@ export class RoleController {
     @Delete(':id')
     deleteUnit(req: Request, res: Response) {
         const unitId = req.params.id;
-        UnitModel.findById(unitId, (error, unit) => {
+        Unit.findById(unitId, (error, unit) => {
             unit.remove(error2 => {
                 if (error2) {
                     res.status(500).send(error2);

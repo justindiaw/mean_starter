@@ -3,8 +3,8 @@ import { Request, Response } from 'express';
 
 import Unit from '../schemas/unit.model';
 
-@Controller('api/units')
-export class UnitController {
+@Controller('api/user')
+export class UserController {
 
     @Get('')
     getUnits(req: Request, res: Response): void {

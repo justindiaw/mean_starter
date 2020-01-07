@@ -17,5 +17,5 @@ const historyCheckSchema = new Schema({
         default: null
     }
 });
-const HistoryCheckModel = mongoose.model('historyCheck', historyCheckSchema);
-export default HistoryCheckModel;
+const HistoryCheck = mongoose.model('historyCheck', historyCheckSchema);
+export default HistoryCheck;
