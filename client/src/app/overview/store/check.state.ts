@@ -26,7 +26,6 @@ export class CheckState {
 
   @Action(CheckIn)
   checkIn(ctx: StateContext<CheckStateModel>, { unitId }: CheckIn): Observable<void> {
-    this.checkService.getHistoryChecks(unitId).subscribe();
     return this.checkService.checkIn(unitId)
       .pipe(tap(() => ctx.dispatch(new LoadUnits())));
   }
