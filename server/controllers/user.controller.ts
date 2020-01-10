@@ -1,36 +1,39 @@
-import { Controller, Delete, Get, Post, Put } from '@overnightjs/core';
+import { Controller, Delete, Post } from '@overnightjs/core';
 import { Request, Response } from 'express';
 
 import Unit from '../schemas/unit.model';
+import User, { IUser } from '../schemas/user.model';
 
 @Controller('api/user')
 export class UserController {
 
-    @Get('')
-    getUnits(req: Request, res: Response): void {
-        Unit.find({})
-            .populate('activeCheck')
-            .populate('role')
-            .then(units => {
-                res.status(200).json(units);
-            });
+    @Post('add-user')
+    addUser(req: Request, res: Response) {
+        try {
+            const user = new User(req.body);
+            user.save();
+            const token = user.generateAuthToken();
+            res.status(201).send({ user, token });
+        } catch (error) {
+            res.status(400).send(error);
+        }
     }
 
-    @Put(':id')
-    putUnit(req: Request, res: Response) {
-        Unit.findById(req.params.id, (err, unit) => {
-            if (req.body._id) {
-                delete req.body._id;
+    @Post('login')
+    login(req: Request, res: Response): void {
+        try {
+            const { email, password } = req.body;
+            const user = User.findByCredentials(email, password) as IUser;
+            if (!user) {
+                res.status(401).send('Login failed! Check authentication credentials');
             }
-            for (const property in req.body) {
-                if (req.body.hasOwnProperty(property)) {
-                    unit[property] = req.body[property];
-                }
-            }
-            unit.save();
-            res.json(unit);
-        });
+            const token = user.generateAuthToken();
+            res.send({ user, token });
+        } catch (error) {
+            res.status(400).send(error);
+        }
     }
+
 
     @Post('')
     addUnit(req: Request, res: Response): void {

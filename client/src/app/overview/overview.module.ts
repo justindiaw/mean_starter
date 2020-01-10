@@ -21,6 +21,7 @@ import { OverviewRoutingModule } from './overview-routing.module';
 import { OverviewComponent } from './overview.component';
 import { CheckService } from './services/check.service';
 import { OverviewService } from './services/overview.service';
+import { ReportService } from './services/report.service';
 import { CheckState } from './store/check.state';
 import { OverviewState } from './store/overview-state.state';
 
@@ -48,7 +49,8 @@ const materials = [
   providers: [
     OverviewService,
     RoleService,
-    CheckService
+    CheckService,
+    ReportService
   ],
   entryComponents: [
     ViewEditUnitDialogComponent,

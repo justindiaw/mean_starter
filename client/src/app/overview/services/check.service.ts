@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class CheckService {
 
-
   readonly apiPrefix = 'api/check';
   constructor(private http: HttpClient) { }
 

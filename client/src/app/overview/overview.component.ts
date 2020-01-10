@@ -7,6 +7,7 @@ import { AppState } from '../store/app.state';
 import { CheckInDialogComponent } from './components/check-in-dialog/check-in-dialog.component';
 import { ViewEditUnitDialogComponent } from './components/view-edit-unit-dialog/view-edit-unit-dialog.component';
 import { Unit } from './models/unit';
+import { ReportService } from './services/report.service';
 import { CheckIn, CheckOut } from './store/check.actions';
 import { AddUnit, DeleteUnit, LoadUnits, UpdateUnit } from './store/overview-state.actions';
 import { OverviewState } from './store/overview-state.state';
@@ -36,6 +37,7 @@ export class OverviewComponent implements OnInit {
   constructor(
     public dialogRef: MatDialog,
     private store: Store,
+    private reportService: ReportService
   ) { }
 
   ngOnInit() {
@@ -96,6 +98,10 @@ export class OverviewComponent implements OnInit {
 
   getRoleName(unit: Unit): string {
     return this.roleMap[unit.role];
+  }
+
+  onClickExport(unit: Unit): void {
+    this.reportService.getHistoryChecks(unit._id).subscribe();
   }
 
   private bindToUnitsChange(): void {
