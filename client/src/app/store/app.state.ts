@@ -5,7 +5,8 @@ import { map } from 'rxjs/operators';
 import { Role } from '../model/role';
 import { SnackBarMessage } from '../model/snack-bar-message';
 import { RoleService } from '../services/role.service';
-import { GetRoles, OpenSnackBar } from './app.actions';
+import { UserService } from '../services/user.service';
+import { GetRoles, Login, OpenSnackBar } from './app.actions';
 
 export interface AppStateModel {
   roles: Role[];
@@ -23,7 +24,10 @@ export interface AppStateModel {
 })
 export class AppState {
 
-  constructor(private roleService: RoleService) { }
+  constructor(
+    private roleService: RoleService,
+    private userService: UserService
+  ) { }
 
   @Selector()
   static roles(state: AppStateModel): Role[] {
@@ -38,6 +42,15 @@ export class AppState {
   @Selector()
   static snackBarMessage(state: AppStateModel): SnackBarMessage {
     return state.snackBarMessage;
+  }
+
+  @Action(Login)
+  login(ctx: StateContext<AppStateModel>, { }: Login): Observable<void> {
+    return this.userService.login()
+      .pipe(map(data => {
+        console.log(data);
+        // ctx.patchState({ roles: roles, roleMap: this.getRoleMap(roles) });
+      }));
   }
 
   @Action(GetRoles)

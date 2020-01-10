@@ -24,13 +24,10 @@ export class HistoryCheckController {
         this.historyCheckService.getHitoryChecks(req.params.unitId)
             .then((checks: IHistoryCheck[]) => {
                 const workBook = this.excelService.getPersonalReport(checks);
-                const tempFilePath = tempfile('.xlsx');
-                // res.attachment('test.xlsx');
                 res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 res.setHeader('Content-Disposition', 'attachment; filename=' + 'Report.xlsx');
                 workBook.xlsx.write(res).then(() => {
                     res.end();
-                    // res.status(200).sendFile(tempFilePath, error => console.log(error));
                 });
             });
     }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 
-import { GetRoles } from './store/app.actions';
+import { GetRoles, Login } from './store/app.actions';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +16,9 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.store.dispatch(new GetRoles());
+    this.store.dispatch([
+      new GetRoles(),
+      new Login()
+    ]);
   }
 }

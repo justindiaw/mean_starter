@@ -1,5 +1,10 @@
 import { SnackBarMessage } from '../model/snack-bar-message';
 
+export class Login {
+    public static readonly type = '[app] Login';
+    constructor() { }
+}
+
 export class GetRoles {
     public static readonly type = '[app] Load Roles';
     constructor() { }
