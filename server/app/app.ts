@@ -1,6 +1,7 @@
 import { Server } from '@overnightjs/core';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
+import * as dotenv from 'dotenv';
 import * as express from 'express';
 import * as mongoose from 'mongoose';
 
@@ -25,6 +26,7 @@ export default class App extends Server {
     }
 
     private config(): void {
+        dotenv.config();
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(cors());
