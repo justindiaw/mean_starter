@@ -101,7 +101,11 @@ export class OverviewComponent implements OnInit {
   }
 
   onClickExport(unit: Unit): void {
-    this.reportService.getHistoryChecks(unit._id).subscribe();
+    this.reportService.getHistoryChecks(unit._id).subscribe(res => {
+      const blob = new Blob([res], { type: res.type });
+      const url = window.URL.createObjectURL(blob);
+      window.open(url);
+    });
   }
 
   private bindToUnitsChange(): void {

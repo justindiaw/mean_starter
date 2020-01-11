@@ -1,12 +1,14 @@
-import { Controller, Delete, Get, Post, Put } from '@overnightjs/core';
+import { Controller, Delete, Get, Middleware, Post, Put } from '@overnightjs/core';
 import { Request, Response } from 'express';
 
+import auth from '../auth/auth';
 import Unit from '../schemas/unit.model';
 
 @Controller('api/units')
 export class UnitController {
 
     @Get('')
+    @Middleware([auth])
     getUnits(req: Request, res: Response): void {
         Unit.find({})
             .populate('activeCheck')

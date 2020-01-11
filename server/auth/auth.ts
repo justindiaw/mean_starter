@@ -1,34 +1,21 @@
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 
-import { secret } from '../configs/secret';
+import User from '../schemas/user.model';
 
-
-export class Auth {
-
-  constructor() { }
-
-  checkToken(req, res, next) {
-    let token = req.headers['x-access-token'] || req.headers['authorization'];
-    if (token.startsWith('Bearer ')) {
-      token = token.slice(7, token.length);
+function auth(req, res, next) {
+  const token = req.header('Authorization').replace('Bearer ', '');
+  const data = jwt.verify(token, process.env.JWT_KEY);
+  try {
+    const user = User.findOne({ _id: data._id, 'tokens.token': token });
+    if (!user) {
+      throw new Error();
     }
-    if (token) {
-      jwt.verify(token, secret, (err, decoded) => {
-        if (err) {
-          return res.json({
-            success: false,
-            message: 'Token is not valid'
-          });
-        } else {
-          req.decoded = decoded;
-          next();
-        }
-      });
-    } else {
-      return res.json({
-        success: false,
-        message: 'Auth token is not supplied'
-      });
-    }
+    req.user = user;
+    req.token = token;
+    next();
+  } catch (error) {
+    res.status(401).send({ error: 'Not authorized to access this resource' });
   }
 }
+
+export default auth;

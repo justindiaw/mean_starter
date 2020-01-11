@@ -9,7 +9,9 @@ import { NgxsModule } from '@ngxs/store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { APIInterceptor } from './services/api-interceptor';
+import { AuthInterceptor } from './services/auth-interceptor';
 import { RoleService } from './services/role.service';
+import { UserService } from './services/user.service';
 import { AppState } from './store/app.state';
 
 const materialModules = [
@@ -32,7 +34,9 @@ const materialModules = [
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: APIInterceptor, multi: true },
-    RoleService
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    RoleService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })

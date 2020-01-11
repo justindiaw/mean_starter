@@ -4,13 +4,16 @@ import { map } from 'rxjs/operators';
 
 import { Role } from '../model/role';
 import { SnackBarMessage } from '../model/snack-bar-message';
+import { localTokenName } from '../model/token';
 import { RoleService } from '../services/role.service';
-import { GetRoles, OpenSnackBar } from './app.actions';
+import { UserService } from '../services/user.service';
+import { GetRoles, Login, OpenSnackBar } from './app.actions';
 
 export interface AppStateModel {
   roles: Role[];
   roleMap: any;
   snackBarMessage: SnackBarMessage;
+  token: string;
 }
 
 @State<AppStateModel>({
@@ -18,12 +21,16 @@ export interface AppStateModel {
   defaults: {
     roles: [],
     roleMap: {},
-    snackBarMessage: null
+    snackBarMessage: null,
+    token: ''
   }
 })
 export class AppState {
 
-  constructor(private roleService: RoleService) { }
+  constructor(
+    private roleService: RoleService,
+    private userService: UserService
+  ) { }
 
   @Selector()
   static roles(state: AppStateModel): Role[] {
@@ -38,6 +45,20 @@ export class AppState {
   @Selector()
   static snackBarMessage(state: AppStateModel): SnackBarMessage {
     return state.snackBarMessage;
+  }
+
+  @Selector()
+  static token(state: AppStateModel): string {
+    return state.token;
+  }
+
+  @Action(Login)
+  login(ctx: StateContext<AppStateModel>, { }: Login): Observable<void> {
+    return this.userService.login()
+      .pipe(map(data => {
+        localStorage.setItem(localTokenName, data.token);
+        ctx.patchState({ token: data.token });
+      }));
   }
 
   @Action(GetRoles)
